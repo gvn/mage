@@ -1,7 +1,6 @@
 const Hapi = require(`hapi`);
 const fs = require(`fs`);
 
-// Create a server with a host and port
 const server = new Hapi.Server();
 
 server.connection({
@@ -9,6 +8,7 @@ server.connection({
   port: 31319
 });
 
+// Serve static frontend:
 server.register(require(`inert`), (err) => {
   if (err) {
     throw err;
@@ -25,28 +25,32 @@ server.register(require(`inert`), (err) => {
   });
 });
 
-// Add the route
 server.route({
   method: `GET`,
-  path:`/blob`,
+  path:`/blob/{id}`,
   config: {
     cors: true
   },
   handler: function (request, reply) {
-    fs.readFile(`./blob.json`, `utf8`, (err, data) => {
-      return reply(data).type(`text/json`);
+    fs.readFile(`./dest/${request.params.id}/blob.json`, `utf8`, (err, data) => {
+      if (err) {
+        return reply(`Error: Blob "${request.params.id}" not found.`).code(404);
+      } else {
+        return reply(data).type(`text/json`);
+      }
     });
   }
 });
 
 server.route({
   method: `POST`,
-  path: `/blob`,
+  path: `/blob/{id}`,
   config: {
     cors: true
   },
   handler: (request, reply) => {
     var success = true;
+    var targetFile = `./dest/${request.params.id}/blob.json`;
 
     if (request.headers[`content-type`] !== `application/json`) {
       try {
@@ -58,15 +62,19 @@ server.route({
     }
 
     if (success) {
-      fs.writeFile(`./blob.json`, JSON.stringify(request.payload), (err) => {
+      fs.stat(targetFile, (err) => {
         if (!err) {
-          return reply(`JSON stored.`);
+          fs.writeFile(targetFile, JSON.stringify(request.payload), (err2) => {
+            if (!err2) {
+              return reply(`JSON stored.`);
+            }
+          });
         } else {
-          console.error(err);
+          return reply(`Error: Target blob "${request.params.id}" doesn't exist!`).code(404);
         }
       });
     } else {
-      return reply(`Request failed due to malformed JSON.`).code(400);
+      return reply(`Error: Request failed due to malformed JSON.`).code(400);
     }
   }
 });

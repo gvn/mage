@@ -4,12 +4,12 @@
   "description": "A static CMS generator.",
   "main": "mage.js",
   "scripts": {
-    "start": "npm-run-all --parallel watch:** server",
-    "server": "node mage.js",
-    "lint": "eslint --fix server.js js/cms.js",
+    "build:jade": "jade editor/index.jade",
     "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/js/lib/jsoneditor.js",
-    "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'",
-    "build:jade": "jade editor/index.jade"
+    "lint": "eslint --fix server.js js/cms.js",
+    "server": "node mage.js",
+    "start": "npm-run-all --parallel watch:** server",
+    "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'"
   },
   "author": "@gvn",
   "license": "MPL",
@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
     "eslint": "^1.10.3",
     "jade": "^1.11.0",
     "mofo-style": "^2.0.0",
