@@ -1,0 +1,32 @@
+{
+  "name": "mage",
+  "version": "1.0.0",
+  "description": "A static CMS generator.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:lint": "eslint --fix server.js js/cms.js",
+    "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/js/lib/jsoneditor.js"
+  },
+  "author": "@gvn",
+  "license": "MPL",
+  "dependencies": {
+    "hapi": "12.1.0",
+    "inert": "3.2.0",
+    "json-editor": "0.7.23"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "mofo-style": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/mofo-style/.eslintrc.yaml",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "no-console": 0
+    }
+  }
+}
