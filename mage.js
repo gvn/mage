@@ -1,5 +1,6 @@
 const Hapi = require(`hapi`);
 const fs = require(`fs`);
+const shell = require(`shelljs`);
 
 const server = new Hapi.Server();
 
@@ -51,7 +52,15 @@ server.route({
   handler: function (request, reply) {
     fs.readFile(`./dest/${request.params.id}/blob.json`, `utf8`, (err, data) => {
       if (err) {
-        return reply(`Error: Blob "${request.params.id}" not found.`).code(404);
+        fs.stat(`./source/${request.params.id}/schema.json`, (err2) => {
+          // If a blob doesn't exist, but it has a schema, return null
+          if (err2) {
+            return reply(`Error: Blob "${request.params.id}" not found.`).code(404);
+          } else {
+            console.log(`Empty database requested for blob "${request.params.id}".`);
+            return reply(`null`).type(`text/json`);
+          }
+        });
       } else {
         console.log(`Sending blob: "${request.params.id}"`);
         return reply(data).type(`text/json`);
@@ -69,8 +78,10 @@ server.route({
   },
   handler: (request, reply) => {
     var success = true;
+    var targetSchema = `./source/${request.params.id}/schema.json`;
     var targetFile = `./dest/${request.params.id}/blob.json`;
 
+    // Attempt to parse raw text as JSON
     if (request.headers[`content-type`] !== `application/json`) {
       try {
         JSON.parse(request.payload);
@@ -80,19 +91,19 @@ server.route({
       }
     }
 
+    // Store JSON
     if (success) {
-      fs.stat(targetFile, (err) => {
-        if (!err) {
-          fs.writeFile(targetFile, JSON.stringify(request.payload), (err2) => {
-            if (!err2) {
-              console.log(`Storing blob: "${request.params.id}"`);
-              return reply(`JSON stored.`);
-            }
-          });
-        } else {
-          return reply(`Error: Target blob "${request.params.id}" doesn't exist!`).code(404);
+      if (shell.test(`-e`, targetSchema)) {
+        if (!shell.test(`-e`, `./dest/${request.params.id}`)) {
+          shell.mkdir(`./dest/${request.params.id}`);
         }
-      });
+
+        console.log(`Storing blob: "${request.params.id}"`);
+        JSON.stringify(request.payload).to(targetFile);
+        return reply(`JSON stored.`);
+      } else {
+        return reply(`Error: Schema "${request.params.id}" doesn't exist!`).code(404);
+      }
     } else {
       return reply(`Error: Request failed due to malformed JSON.`).code(400);
     }

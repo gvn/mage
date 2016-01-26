@@ -16,7 +16,8 @@
   "dependencies": {
     "hapi": "12.1.0",
     "inert": "3.2.0",
-    "json-editor": "0.7.23"
+    "json-editor": "0.7.23",
+    "shelljs": "^0.5.3"
   },
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
