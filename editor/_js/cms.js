@@ -5,6 +5,7 @@ JSONEditor.defaults.theme = `bootstrap3`;
 JSONEditor.defaults.iconlib = `bootstrap3`;
 
 var editor;
+var blob = window.location.pathname.match(/\/edit\/([a-zA-Z\d-_]*)/)[1];
 
 function loadJSON() {
   var request = new XMLHttpRequest();
@@ -17,7 +18,7 @@ function loadJSON() {
     console.error(`loadJSON failed.`);
   };
 
-  request.open(`GET`, `http://localhost:31319/blob`);
+  request.open(`GET`, `http://localhost:31319/blob/${blob}`);
   request.send();
 }
 
@@ -37,7 +38,7 @@ function loadSchema() {
     console.error(`loadSchema failed.`);
   };
 
-  request.open(`GET`, `http://localhost:31319/schema`);
+  request.open(`GET`, `http://localhost:31319/schema/${blob}`);
   request.send();
 }
 
@@ -57,7 +58,7 @@ function saveJSON() {
     console.error(`Request failed`);
   };
 
-  request.open(`POST`, `http://localhost:31319/blob`);
+  request.open(`POST`, `http://localhost:31319/blob/${blob}`);
   request.setRequestHeader(`Content-Type`, `application/json`);
   request.send(JSON.stringify(pageJSON));
   console.log(`asdfasdf`);

@@ -14,15 +14,31 @@ server.register(require(`inert`), (err) => {
     throw err;
   }
 
-  server.route({
+  server.route([{
+    method: `GET`,
+    path: `/edit/_css/{param*}`,
+    handler: {
+      directory: {
+        path: `editor/_css/`
+      }
+    }
+  }, {
+    method: `GET`,
+    path: `/edit/_js/{param*}`,
+    handler: {
+      directory: {
+        path: `editor/_js/`
+      }
+    }
+  }, {
     method: `GET`,
     path: `/edit/{param*}`,
     handler: {
-      directory: {
-        path: `editor`
+      file: {
+        path: `editor/index.html`
       }
     }
-  });
+  }]);
 });
 
 // GET /blob/{id}
@@ -37,6 +53,7 @@ server.route({
       if (err) {
         return reply(`Error: Blob "${request.params.id}" not found.`).code(404);
       } else {
+        console.log(`Sending blob: "${request.params.id}"`);
         return reply(data).type(`text/json`);
       }
     });
@@ -68,6 +85,7 @@ server.route({
         if (!err) {
           fs.writeFile(targetFile, JSON.stringify(request.payload), (err2) => {
             if (!err2) {
+              console.log(`Storing blob: "${request.params.id}"`);
               return reply(`JSON stored.`);
             }
           });
