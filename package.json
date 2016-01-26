@@ -2,11 +2,14 @@
   "name": "mage",
   "version": "1.0.0",
   "description": "A static CMS generator.",
-  "main": "server.js",
+  "main": "mage.js",
   "scripts": {
-    "start": "node server.js",
-    "test:lint": "eslint --fix server.js js/cms.js",
-    "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/js/lib/jsoneditor.js"
+    "start": "npm-run-all --parallel watch:** server",
+    "server": "node mage.js",
+    "lint": "eslint --fix server.js js/cms.js",
+    "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/js/lib/jsoneditor.js",
+    "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'",
+    "build:jade": "jade editor/index.jade"
   },
   "author": "@gvn",
   "license": "MPL",
@@ -16,8 +19,11 @@
     "json-editor": "0.7.23"
   },
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
     "eslint": "^1.10.3",
-    "mofo-style": "^2.0.0"
+    "jade": "^1.11.0",
+    "mofo-style": "^2.0.0",
+    "npm-run-all": "^1.5.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/mofo-style/.eslintrc.yaml",
