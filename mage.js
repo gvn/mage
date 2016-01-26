@@ -25,6 +25,7 @@ server.register(require(`inert`), (err) => {
   });
 });
 
+// GET /blob/{id}
 server.route({
   method: `GET`,
   path:`/blob/{id}`,
@@ -42,6 +43,7 @@ server.route({
   }
 });
 
+// POST /blob/{id}
 server.route({
   method: `POST`,
   path: `/blob/{id}`,
@@ -79,18 +81,26 @@ server.route({
   }
 });
 
+// GET /schema/{id}
 server.route({
   method: `GET`,
-  path: `/schema`,
+  path: `/schema/{id}`,
   config: {
     cors: true
   },
   handler: (request, reply) => {
-    fs.readFile(`./schema.json`, `utf8`, (err, data) => {
-      return reply(data).type(`text/json`);
+    fs.readFile(`./source/${request.params.id}/schema.json`, `utf8`, (err, data) => {
+      if (err) {
+        return reply(`Error: Schema "${request.params.id}" not found.`).code(404);
+      } else {
+        return reply(data).type(`text/json`);
+      }
     });
   }
 });
+
+// TODO
+// POST /schema/{id}
 
 // Start the server
 server.start((err) => {
