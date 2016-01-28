@@ -1,4 +1,4 @@
-# Mage
+<img src="http://gvn.github.io/mage/assets/mage.png" width="200"><br/>
 
 **A RESTful, localizable, JSON-oriented CMS**
 
