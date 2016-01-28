@@ -4,13 +4,14 @@
 
 ## About
 
-Mage is a *pure* CMS. Unlike most CMSes, Mage barely has any opinions on how you construct your front end. It provides JSON via a REST API and an interface to edit content. That's all it does!
+Mage is a *pure* CMS. Unlike most CMSes, Mage is unopinionated about how you build your front end. It provides JSON via a REST API and an interface to edit content. That's all it does!
 
 Mage functions similarly to a [static site generator](https://github.com/skx/static-site-generators). It works by managing a collection of "blobs", which are simply JSON documents. It's up to you to define the structure of your blobs through [JSON schemas](http://json-schema.org/).
 
 ### Design Principles
 
 - Lightweight and consumer agnostic.
+- Unlimited consumption. Build as many clients as you wish.
 - Schema-generated document storage.
 - Localization is a first class citizen.
 - Client and server-side validation comes free.
