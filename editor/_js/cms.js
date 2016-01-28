@@ -1,13 +1,17 @@
 /* global JSONEditor */
 // TODO : Remove this global ^
 
+var config = JSON.parse(document.querySelector(`script[type="text/json"`).innerText);
+
 JSONEditor.defaults.theme = `bootstrap3`;
 JSONEditor.defaults.iconlib = `bootstrap3`;
 
 var editor;
 var blob = window.location.pathname.match(/\/edit\/([a-zA-Z\d-_]*)/)[1];
+var elLocaleSelect = document.querySelector(`select`);
 
-function loadJSON() {
+
+function loadJSON(locale) {
   var request = new XMLHttpRequest();
 
   request.onload = (data) => {
@@ -18,11 +22,11 @@ function loadJSON() {
     console.error(`loadJSON failed.`);
   };
 
-  request.open(`GET`, `http://localhost:31319/blob/${blob}`);
+  request.open(`GET`, `http://localhost:31319/blob/${locale}/${blob}`);
   request.send();
 }
 
-function loadSchema() {
+function loadSchema(callback) {
   var request = new XMLHttpRequest();
 
   request.onload = (data) => {
@@ -31,7 +35,7 @@ function loadSchema() {
       schema: JSON.parse(data.currentTarget.response)
     });
 
-    loadJSON();
+    callback.call();
   };
 
   request.onerror = () => {
@@ -58,14 +62,24 @@ function saveJSON() {
     console.error(`Request failed`);
   };
 
-  request.open(`POST`, `http://localhost:31319/blob/${blob}`);
+  request.open(`POST`, `http://localhost:31319/blob/${elLocaleSelect.value}/${blob}`);
   request.setRequestHeader(`Content-Type`, `application/json`);
   request.send(JSON.stringify(pageJSON));
   console.log(`asdfasdf`);
 }
 
+// Event Delegation
+
+elLocaleSelect.addEventListener(`change`, () => {
+  loadJSON(elLocaleSelect.value);
+});
+
 document.getElementById(`submit`).addEventListener(`click`, () => {
   saveJSON();
 });
 
-loadSchema();
+// Initialize
+
+loadSchema(() => {
+  loadJSON(config.defaultLocale);
+});

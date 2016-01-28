@@ -4,9 +4,16 @@
 
 ## About
 
-Mage is a CMS for people who *hate* CMSes. Similar to a static site generator, it can be classified as a *static CMS generator*. It shines when you need to create a simple JSON based REST API for structured documents, or *blobs*.
+Mage is a CMS for people who *hate* CMSes. Similar to a static site generator, it can be thought of as a *static CMS generator*. It shines when you need to create a simple JSON based REST API for structured documents, or *blobs*.
 
 Mage works by managing a collection of "blobs", which are simply JSON documents. It's up to you to define the structure of your blobs through JSON schemas.
+
+## Design Principles
+
+- Schema-first
+- Localization is a first class citizen
+- Consumer agnostic
+- Client and server-side validation comes free
 
 ## Setup
 
@@ -16,7 +23,8 @@ Run the following commands in your terminal:
 
 1. `git clone https://github.com/gvn/mage.git && cd mage`
 2. `npm install`
-3. `npm start`
+3. `cp env.json.sample env.json`
+4. `npm start`
 
 ## Adding a blob
 
@@ -31,10 +39,10 @@ When you're done, just hit the Save button. That's it!
 
 ## REST API
 
-### `/blob/ID`
+### `/blob/LOCALE/ID`
 
-- `GET` : Retrieve JSON for the specified ID.
-- `PUT` : Store JSON for the specified ID.
+- `GET` : Retrieve JSON for the specified ID and LOCALE.
+- `PUT` : Store JSON for the specified ID and LOCALE.
 
 ### `/schema/ID`
 

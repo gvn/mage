@@ -3,10 +3,11 @@ const fs = require(`fs`);
 const shell = require(`shelljs`);
 
 const server = new Hapi.Server();
+const config = JSON.parse(shell.cat(`env.json`));
 
 server.connection({
-  host: `localhost`,
-  port: 31319
+  host: config.host,
+  port: config.port
 });
 
 // Serve static frontend:
@@ -42,15 +43,15 @@ server.register(require(`inert`), (err) => {
   }]);
 });
 
-// GET /blob/{id}
+// GET /blob/{locale}/{id}
 server.route({
   method: `GET`,
-  path:`/blob/{id}`,
+  path:`/blob/{locale}/{id}`,
   config: {
     cors: true
   },
   handler: function (request, reply) {
-    fs.readFile(`./dest/${request.params.id}/blob.json`, `utf8`, (err, data) => {
+    fs.readFile(`./dest/${request.params.id}/${request.params.locale}.json`, `utf8`, (err, data) => {
       if (err) {
         fs.stat(`./source/${request.params.id}/schema.json`, (err2) => {
           // If a blob doesn't exist, but it has a schema, return null
@@ -69,17 +70,17 @@ server.route({
   }
 });
 
-// POST /blob/{id}
+// POST /blob/{locale}/{id}
 server.route({
   method: `POST`,
-  path: `/blob/{id}`,
+  path: `/blob/{locale}/{id}`,
   config: {
     cors: true
   },
   handler: (request, reply) => {
     var success = true;
     var targetSchema = `./source/${request.params.id}/schema.json`;
-    var targetFile = `./dest/${request.params.id}/blob.json`;
+    var targetFile = `./dest/${request.params.id}/${request.params.locale}.json`;
 
     // Attempt to parse raw text as JSON
     if (request.headers[`content-type`] !== `application/json`) {

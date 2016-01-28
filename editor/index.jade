@@ -11,11 +11,19 @@ html
     .page-header
       h1 Mage
     
-    #actions
-      button.btn.btn-primary#submit
-        .glyphicon.glyphicon-save  Save
+    #actions.row
+      .col-md-2.text-left
+        select.form-control
+          each locale in locales
+            option=locale
+          
+      .col-md-10.text-right
+        button.btn.btn-primary#submit
+          .glyphicon.glyphicon-save  Save
       
     #editor
-    
+  
+  script(type='text/json', id='config')
+    include ../env.json  
   script(src='/edit/_js/lib/jsoneditor.js')
   script(src='/edit/_js/cms.js')

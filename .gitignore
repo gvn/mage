@@ -2,3 +2,4 @@ blob.json
 editor/index.html
 node_modules
 .DS_Store
+env.json

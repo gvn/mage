@@ -5,7 +5,7 @@
   "main": "mage.js",
   "scripts": {
     "build": "npm run include && npm run build:jade",
-    "build:jade": "jade editor/index.jade",
+    "build:jade": "jade --obj env.json editor/index.jade",
     "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/_js/lib/jsoneditor.js",
     "lint": "eslint --fix server.js js/cms.js",
     "server": "node mage.js",
