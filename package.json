@@ -4,11 +4,12 @@
   "description": "A static CMS generator.",
   "main": "mage.js",
   "scripts": {
+    "build": "npm run include && npm run build:jade",
     "build:jade": "jade editor/index.jade",
-    "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/js/lib/jsoneditor.js",
+    "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/_js/lib/jsoneditor.js",
     "lint": "eslint --fix server.js js/cms.js",
     "server": "node mage.js",
-    "start": "npm-run-all --parallel watch:** server",
+    "start": "npm run build && npm-run-all --parallel watch:** server",
     "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'"
   },
   "author": "@gvn",
