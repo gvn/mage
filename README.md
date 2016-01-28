@@ -4,15 +4,15 @@
 
 ## About
 
-Mage is a CMS for people who *hate* CMSes. Similar to a static site generator, it can be thought of as a *static CMS generator*. It shines when you need to create a simple JSON based REST API for structured documents, or *blobs*.
+Mage is truly *content-oriented* CMS. Unlike most CMSes, Mage barely has any opinions on how you build your front end. It provides JSON via a REST API and an interface to edit your content. That's all it does!
 
-Mage works by managing a collection of "blobs", which are simply JSON documents. It's up to you to define the structure of your blobs through JSON schemas.
+Mage functions similarly to a static site generator. It works by managing a collection of "blobs", which are simply JSON documents. It's up to you to define the structure of your blobs through JSON schemas.
 
 ## Design Principles
 
-- Schema-first
+- Lightweight and consumer agnostic
+- Schema-generated document storage
 - Localization is a first class citizen
-- Consumer agnostic
 - Client and server-side validation comes free
 
 ## Setup
@@ -36,6 +36,10 @@ Run the following commands in your terminal:
 To edit a blob's content, just navigate to [http://localhost:31319/edit/BLOB](http://localhost:31319/edit/BLOB) and use the form.
 
 When you're done, just hit the Save button. That's it!
+
+## Adding locales
+
+By default, Mage is limited to one locale, but it's easy to add more. Just add additional locales to your `env.json` as needed. Once you have multiple locales configured, you will see a dropdown menu in the editor to switch between them.
 
 ## REST API
 

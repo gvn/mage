@@ -10,7 +10,6 @@ var editor;
 var blob = window.location.pathname.match(/\/edit\/([a-zA-Z\d-_]*)/)[1];
 var elLocaleSelect = document.querySelector(`select`);
 
-
 function loadJSON(locale) {
   var request = new XMLHttpRequest();
 
