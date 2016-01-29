@@ -64,7 +64,9 @@ server.route({
         });
       } else {
         console.log(`Sending blob: "${request.params.id}"`);
-        return reply(data).type(`text/json`);
+        var lastModifiedTime = fs.statSync(`./dest/${request.params.id}/${request.params.locale}.json`).mtime;
+
+        return reply(data).type(`text/json`).header(`Last-Modified`, lastModifiedTime);
       }
     });
   }

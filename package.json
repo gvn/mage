@@ -8,7 +8,7 @@
     "build:jade": "jade --obj env.json editor/index.jade",
     "include": "ncp ./node_modules/json-editor/dist/jsoneditor.js ./editor/_js/lib/jsoneditor.js",
     "lint": "eslint --fix server.js js/cms.js",
-    "server": "nodemon -w source -w env.json mage.js",
+    "server": "nodemon -w source -w env.json -w mage.js mage.js",
     "start": "npm run build && npm-run-all --parallel watch:** server",
     "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'"
   },
