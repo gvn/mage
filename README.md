@@ -30,10 +30,9 @@ Run the following commands in your terminal:
 
 ### Adding a blob
 
-1. Create a new folder in `/source` with the name of your blob.
-2. Add a JSON Schema for your blob to the folder and name it `schema.json`.
+1. Add a new JSON schema in `/source` named after your blob (eg: `pizza.json`).
 
-**Pro Tip –** Use the generator at [jsonschema.net](http://jsonschema.net)!
+**Pro Tip –** Use the generator at [jsonschema.net](http://jsonschema.net) to create a schema!
 
 ### Editing a blob
 

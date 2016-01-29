@@ -53,7 +53,7 @@ server.route({
   handler: function (request, reply) {
     fs.readFile(`./dest/${request.params.id}/${request.params.locale}.json`, `utf8`, (err, data) => {
       if (err) {
-        fs.stat(`./source/${request.params.id}/schema.json`, (err2) => {
+        fs.stat(`./source/${request.params.id}.json`, (err2) => {
           // If a blob doesn't exist, but it has a schema, return null
           if (err2) {
             return reply(`Error: Blob "${request.params.id}" not found.`).code(404);
@@ -81,7 +81,7 @@ server.route({
   },
   handler: (request, reply) => {
     var success = true;
-    var targetSchema = `./source/${request.params.id}/schema.json`;
+    var targetSchema = `./source/${request.params.id}.json`;
     var targetFile = `./dest/${request.params.id}/${request.params.locale}.json`;
 
     // Attempt to parse raw text as JSON
@@ -121,7 +121,7 @@ server.route({
     cors: true
   },
   handler: (request, reply) => {
-    fs.readFile(`./source/${request.params.id}/schema.json`, `utf8`, (err, data) => {
+    fs.readFile(`./source/${request.params.id}.json`, `utf8`, (err, data) => {
       if (err) {
         return reply(`Error: Schema "${request.params.id}" not found.`).code(404);
       } else {
