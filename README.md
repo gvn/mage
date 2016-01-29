@@ -10,9 +10,8 @@ Mage functions similarly to a [static site generator](https://github.com/skx/sta
 
 ### Design Principles
 
-- Lightweight and consumer agnostic.
-- Unlimited consumption. Build as many clients as you wish.
-- Schema-generated document storage.
+- Lightweight and front-end agnostic.
+- Schema-bound document storage.
 - Localization is a first class citizen.
 - Client and server-side validation comes free.
 
@@ -44,7 +43,7 @@ When you're done, just hit the **Save** button. That's it!
 
 ### Adding locales
 
-By default, Mage is limited to a single locale, US English, but it's easy to add more. Just add additional locales to your `env.json`'s `locales` array as needed. Once there are multiple locales defined, you will see a dropdown menu in the editor to switch between them.
+By default, Mage is limited to a single locale, US English, but it's easy to add more! Just add additional locales to your `env.json`'s `locales` array as needed. Once there are multiple locales defined, you will see a dropdown menu in the editor to switch between them.
 
 ## REST API
 

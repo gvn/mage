@@ -1,7 +1,7 @@
 {
   "name": "mage",
-  "version": "1.0.0",
-  "description": "A static CMS generator.",
+  "version": "0.1.0",
+  "description": "A RESTful, localizable, JSON-oriented CMS.",
   "main": "mage.js",
   "scripts": {
     "build": "npm run include && npm run build:jade",
