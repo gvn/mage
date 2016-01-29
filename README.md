@@ -51,6 +51,10 @@ By default, Mage is limited to a single locale, US English, but it's easy to add
 - `GET` : Retrieve JSON for the specified ID and LOCALE.
 - `PUT` : Store JSON for the specified ID and LOCALE.
 
+### `/blobs`
+
+- `GET` : Retrieve a list of the available blobs as well as their modification dates where applicable.
+
 ### `/schema/ID`
 
 - `GET` : Retrieve the JSON Schema for the specified ID.

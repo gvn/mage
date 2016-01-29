@@ -113,6 +113,36 @@ server.route({
   }
 });
 
+// GET /blobs
+server.route({
+  method: `GET`,
+  path: `/blobs`,
+  config: {
+    cors: true
+  },
+  handler: (request, reply) => {
+    var schemas = shell.ls(`source`);
+
+    var blobs = schemas.map((schema) => {
+      schema = schema.split(`.`)[0];
+
+      return {
+        id: schema,
+        locales: config.locales.map((locale) => {
+          var targetFile = `./dest/${schema}/${locale}.json`;
+
+          return {
+            id: locale,
+            lastModified: shell.test(`-e`, targetFile) ? fs.statSync(targetFile).mtime : null
+          };
+        })
+      };
+    });
+
+    return reply(blobs).type(`text/json`);
+  }
+});
+
 // GET /schema/{id}
 server.route({
   method: `GET`,
