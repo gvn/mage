@@ -1,3 +1,5 @@
+"use strict";
+
 const Hapi = require(`hapi`);
 const fs = require(`fs`);
 const shell = require(`shelljs`);

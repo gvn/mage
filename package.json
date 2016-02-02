@@ -10,6 +10,9 @@
     "lint": "eslint --fix server.js js/cms.js",
     "server": "nodemon -w source -w env.json -w mage.js mage.js",
     "start": "npm run build && npm-run-all --parallel watch:** server",
+    "test": "npm-run-all test:*",
+    "test:lint": "eslint *.js js/cms.js",
+    "test:validate-data": "node validate.js",
     "watch:jade": "chokidar 'editor/index.jade' -c 'npm run build:jade'"
   },
   "author": "@gvn",
@@ -22,12 +25,12 @@
     "shelljs": "0.5.3"
   },
   "devDependencies": {
+    "ajv": "^3.5.1",
     "chokidar-cli": "^1.2.0",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0",
     "eslint": "^1.10.3",
     "jade": "^1.11.0",
     "mofo-style": "^2.0.0",
+    "ncp": "^2.0.0",
     "npm-run-all": "^1.5.0"
   },
   "eslintConfig": {
@@ -37,7 +40,7 @@
       "node": true
     },
     "rules": {
-      "no-console": 0
+      "strict": [2, "global"]
     }
   }
 }
