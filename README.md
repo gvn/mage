@@ -1,6 +1,6 @@
 <img src="http://gvn.github.io/mage/assets/mage.png" width="200"><br/>
 
-**A RESTful, localizable, JSON-oriented CMS**
+**A RESTful CMS**
 
 ## About
 
@@ -11,7 +11,7 @@ Mage functions similarly to a [static site generator](https://github.com/skx/sta
 ### Design Principles
 
 - Lightweight and front-end agnostic.
-- Schema-bound document storage.
+- Schema-bound JSON document storage.
 - Localization is a first class citizen.
 - Client and server-side validation comes free.
 
